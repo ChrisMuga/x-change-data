@@ -7,6 +7,7 @@ use App\user;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -22,7 +23,7 @@ class UserController extends Controller
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email_address = $request->email_address;
-        $user->password = $request->password;
+        $user->password =  Hash::make($request->password);
         try
         {
             $user->save();
