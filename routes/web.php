@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::post('register','UserController@register');
+Route::get('signin','UserController@signin');
+Route::post('user-signin','UserController@user_signin');

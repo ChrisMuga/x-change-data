@@ -8,6 +8,7 @@ use App\user;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -45,5 +46,44 @@ class UserController extends Controller
         }
         
        
+    }
+
+    #signin
+    public function signin()
+    {
+        return view('signin');
+    }
+
+    #user_signin
+    public function user_signin(Request $request)
+    {
+        #return $request;
+        $credentials = $request->only('email_address', 'password');
+
+        if (Auth::attempt($credentials)) 
+        {
+            // Authentication passed...
+            $user_data = Auth::user();
+            $code=1;
+            $msg="Welcome, ".$user_data->first_name;
+            $response = array(
+
+                'code'=>$code,
+                'msg'=>$msg,
+                'user_data'=>$user_data
+            );
+        }
+        else
+        {
+            $code=0;
+            $msg="Wrong Credentials";
+            $response = array(
+
+                'code'=>$code,
+                'msg'=>$msg,
+            );
+        }
+
+        return $response;
     }
 }
